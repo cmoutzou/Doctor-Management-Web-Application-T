@@ -10,6 +10,7 @@ import dj_database_url
 import os
 from django.test.runner import DiscoverRunner
 from pathlib import Path
+django_heroku.settings(locals())
 
 
 # Activate Django-Heroku.
