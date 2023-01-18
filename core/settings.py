@@ -14,13 +14,15 @@ django_heroku.settings(locals())
 
 
 # Activate Django-Heroku.
-django_heroku.settings(locals())
+#django_heroku.settings(locals())
 
 
 env = environ.Env(
     # set casting, default value
     DEBUG=(bool, True)
 )
+
+#DJANGO_SETTINGS_MODULE=apps.settings
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
