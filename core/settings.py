@@ -141,11 +141,7 @@ WSGI_APPLICATION = 'core.wsgi.application'
     }
 else:'''
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(BASE_DIR, "db.sqlite3")
-    },
-	'default2':{
+	'default':{
 		'ENGINE': 'django.db.backends.mysql',
 		'NAME': 'biokliniki',
 		'USER'    : 'root',
