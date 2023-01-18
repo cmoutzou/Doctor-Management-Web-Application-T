@@ -1,0 +1,122 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} UI Forms {% endblock %} 
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <!-- [ Main Content ] start -->
+    <div class="pcoded-main-container">
+        <div class="pcoded-wrapper">
+
+            <div class="pcoded-content">
+                <div class="pcoded-inner-content">
+                    <!-- [ breadcrumb ] start -->
+                    <div class="page-header">
+                        <div class="page-block">
+                            <div class="row align-items-center">
+                                <div class="col-md-12">
+                                    <div class="page-header-title">
+                                        <h5 class="m-b-10">Καταχώρηση Ασθενούς</h5>
+                                    </div>
+                                    <ul class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>
+                                        <li class="breadcrumb-item"><a href="javascript:">Form Componants</a></li>
+                                        <li class="breadcrumb-item"><a href="javascript:">Form Elements</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- [ breadcrumb ] end -->
+                    <div class="main-body">
+                        <div class="page-wrapper">
+                            <!-- [ Main Content ] start -->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5>Καταχώρση στοιχείων Νοσηλευόμενου </h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <h5>Νοσηλευόμενος Ασθενής</h5>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-md-6">
+												 
+                                                    <form action='insert_patient2' method='POST' >
+													{% csrf_token %}
+													<label for="insert_patient"> </label>
+                                                        <div class="form-group">
+                                                            <label for="exampleInputEmail1">Ονοματεπώνυμο</label>
+                                                            <input type="text" class="form-control" name="name"  placeholder="Ονοματεπώνυμο Ασθενούς" required>
+                                                            <small id="emailHelp" class="form-text text-muted">Εισάγετε το Ονοματεπώνυμο του ασθενούς.</small>
+                                                        </div>
+														<div class="form-group">
+                                                            <label for="exampleInputEmail1">ΑΜΚΑ</label>
+                                                            <input type="text" class="form-control" name="amka"  placeholder="ΑΜΚΑ" maxlength="11" required>
+                                                            <small id="emailHelp" class="form-text text-muted">Εισάγετε το ΑΜΚΑ του ασθενούς.</small>
+                                                        </div>
+														<div class="form-group">
+                                                            <label >Ηλικία Ασθενούς</label>
+                                                            <input type="text" class="form-control" placeholder="Ηλικία Ασθενούς" name='age' required>
+                                                        </div>
+
+                                                        <div class="form-group form-check">
+																<p>Προσωπικός Ασθενής:</p>
+																<input type="radio" id="personal_patient" name="personal_patient" value="True" required>
+																<label for="personal_patient">ΝΑΙ</label><br>
+																<input type="radio" id="personal_patient" name="personal_patient" value="False">
+																<label for="personal_patient">ΟΧΙ</label><br>  
+                                                        </div>-
+                                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                                    
+                                                </div>
+                                                <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>Ημερομηνία Εισαγωγής</label>
+                                                            <input type="date" class="form-control" placeholder="Ημερομηνία Εισαγωγής" name="datein">
+															<label>Ημερομηνία Εξιτήριου</label>
+															<input type="date" class="form-control" placeholder="Ημερομηνία Εξιτήριου" name="dateout">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="exampleFormControlSelect1">Ασφάλεια</label>
+                                                            <select class="form-control" name="asfaleia" required>
+                                                                <option value="">Επιλέξτε Ασφαλιστική</option>
+                                                                {% for ins in insurance %}
+																<option value= "{{ ins.code_ins }}" > {{ ins.insurance }}</option>
+                                                                {% endfor %}
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="exampleFormControlTextarea1">Ιστορικό Ασθενούς</label>
+                                                            <textarea class="form-control" name="istoriko" rows="3"></textarea>
+                                                        </div>
+                                                        <input type="hidden" id="custId" name="energeia" value="ΝΟΣΗΛΕΙΑ">
+														<div class="form-group">
+                                                            <label for="exampleFormControlTextarea1">Γνωμάτευση</label>
+                                                            <textarea class="form-control" name="gnomateusi" rows="3"></textarea>
+                                                        </div>
+														<div class="form-group">
+                                                            <label for="exampleFormControlTextarea1">Παρατηρήσεις</label>
+                                                            <textarea class="form-control" name="odigies" rows="3"></textarea>
+                                                        </div>
+                                                    </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    <!-- [ Main Content ] end -->
+
+
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+{% endblock javascripts %}

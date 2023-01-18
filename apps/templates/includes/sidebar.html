@@ -1,0 +1,104 @@
+<!-- [ navigation menu ] start -->
+<nav class="pcoded-navbar">
+    <div class="navbar-wrapper">
+        <div class="navbar-brand header-logo">
+            <a href="/" class="b-brand">
+                <div class="b-bg">
+                    <i class="feather icon-trending-up"></i>
+                </div>
+                <span class="b-title">Dr Papalampidou A.</span>
+            </a>
+            <a class="mobile-menu" id="mobile-collapse" href="javascript:"><span></span></a>
+        </div>
+        <div class="navbar-content scroll-div">
+            <ul class="nav pcoded-inner-navbar">
+                <li class="nav-item pcoded-menu-caption">
+                    <label>Navigation</label>
+                </li>
+                <li data-username="dashboard Default Ecommerce CRM Analytics Crypto Project" 
+                    class="nav-item {% if 'index' in segment %} active {% endif %}">
+                    <a href="/" class="nav-link "><span class="pcoded-micon"><i class="feather icon-home"></i></span><span
+                            class="pcoded-mtext">Dashboard</span></a>
+                </li>
+                <li data-username="form elements advance componant validation masking wizard picker select"
+                class="nav-item {% if 'form_elements' in segment %} active {% endif %}">
+                <a href="/agenta.html" class="nav-link "><span class="pcoded-micon"><i
+                        class="feather icon-file-text"></i></span><span
+                        class="pcoded-mtext">Agenta</span></a>
+                </li>
+                              
+                
+                <li class="nav-item pcoded-menu-caption">
+                    <label>LifeCheck</label>
+                </li>
+                <li data-username="form elements advance componant validation masking wizard picker select"
+                class="nav-item {% if 'form_elements' in segment %} active {% endif %}">
+                <a href="/exam_patient_L.html" class="nav-link "><span class="pcoded-micon"><i
+                        class="feather icon-file-text"></i></span><span
+                        class="pcoded-mtext">Καταχώρηση Εξεταζόμενου</span></a>
+                </li>
+                <li data-username="form elements advance componant validation masking wizard picker select"
+                class="nav-item {% if 'form_elements' in segment %} active {% endif %}">
+                <a href="/exam_table_L.html" class="nav-link "><span class="pcoded-micon"><i
+                    class="feather icon-file-text"></i></span><span
+                    class="pcoded-mtext">Ασθενείς</span></a>
+                </li>
+                <li data-username="form elements advance componant validation masking wizard picker select"
+                class="nav-item {% if 'form_elements' in segment %} active {% endif %}">
+                <a href="/invoice_L.html" class="nav-link "><span class="pcoded-micon"><i
+                    class="feather icon-file-text"></i></span><span
+                    class="pcoded-mtext">Τιμολόγια</span></a>
+                </li>
+                <li class="nav-item pcoded-menu-caption">
+                    <label>Βιοκλινική</label>
+                </li>
+                <li data-username="form elements advance componant validation masking wizard picker select"
+                    class="nav-item {% if 'form_elements' in segment %} active {% endif %}">
+                    <a href="/exam_patient.html" class="nav-link "><span class="pcoded-micon"><i
+                            class="feather icon-file-text"></i></span><span
+                            class="pcoded-mtext">Καταχώρηση Εξεταζόμενου</span></a>
+                </li>
+				<li data-username="form elements advance componant validation masking wizard picker select"
+                    class="nav-item {% if 'nurse_patient' in segment %} active {% endif %}">
+                    <a href="/nurse_patient.html" class="nav-link "><span class="pcoded-micon"><i
+                            class="feather icon-file-text"></i></span><span
+                            class="pcoded-mtext">Καταχώρηση Νοσηλευόμενου</span></a>
+                </li>
+                <li data-username="form elements advance componant validation masking wizard picker select"
+                    class="nav-item {% if 'examtable' in segment %} active {% endif %}">
+                    <a href="/exam_table.html" class="nav-link "><span class="pcoded-micon"><i
+                        class="feather icon-file-text"></i></span><span
+                        class="pcoded-mtext">Ασθενείς</span></a>
+                </li>
+                <li data-username="form elements advance componant validation masking wizard picker select"
+                    class="nav-item {% if 'examtable' in segment %} active {% endif %}">
+                    <a href="/invoice.html" class="nav-link "><span class="pcoded-micon"><i
+                        class="feather icon-file-text"></i></span><span
+                        class="pcoded-mtext">Τιμολόγια</span></a>
+                </li>
+        <!--        <li data-username="Table bootstrap datatable footable" 
+                    class="nav-item {% if 'examtable' in segment %} active {% endif %}">
+                    <a href="/examtable.html" class="nav-link "><span class="pcoded-micon"><i
+                            class="feather icon-server"></i></span><span class="pcoded-mtext">Ασθενείς</span></a>
+                </li>-->
+                <li data-username="Authentication Sign up Sign in reset password Change password Personal information profile settings map form subscribe"
+                    class="nav-item pcoded-hasmenu">
+                    <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-lock"></i></span><span
+                            class="pcoded-mtext">Authentication</span></a>
+                    <ul class="pcoded-submenu">
+                        <li class=""><a href="/register.html" class="" target="_blank">Sign UP</a></li>
+                        <li class=""><a href="/login.html" class="" target="_blank">Sign IN</a></li>
+                    </ul>
+                </li>
+
+                <li data-username="Disabled Menu" class="nav-item">
+                    <a href="{% url 'logout' %}" class="nav-link">
+                        <span class="pcoded-micon"><i class="feather icon-power"></i></span><span class="pcoded-mtext">Logout</span>
+                    </a>
+                </li>
+     
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- [ navigation menu ] end -->

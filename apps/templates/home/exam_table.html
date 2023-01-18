@@ -1,0 +1,345 @@
+{% extends "layouts/base.html" %}
+ 
+{% block title %} Dashboard {% endblock %} 
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}
+
+<style>
+    input,select {
+        background-color: #2C394B;
+        color:bisque
+    }
+
+    #example_filter{
+        position:relative; 
+        left:80%;
+    }
+    #example_info{
+        position:relative; 
+        left:80%; 
+        color:bisque;
+        
+    }
+    #example_previous,#example_next{
+        color:bisque;
+        
+    }
+    #example_wrapper{
+        resize:none        
+    }
+    
+
+</style>    
+{% endblock stylesheets %}
+
+{% block content %}
+
+    <!-- [ Main Content ] start -->
+    <div class="pcoded-main-container">
+        <div class="pcoded-wrapper">
+
+            <div class="pcoded-content">
+                <div class="pcoded-inner-content">
+                    <!-- [ breadcrumb ] start -->
+
+                    <!-- [ breadcrumb ] end -->
+                    <div class="main-body">
+                        <div class="page-wrapper">
+                            <!-- [ Main Content ] start -->
+                            <div class="row">
+                                <!--[ daily sales section ] start-->
+                                <div class="col-md-6 col-xl-4">
+                                    <div class="card daily-sales">
+                                        <div class="card-block">
+                                            <h6 class="mb-4">Ημερήσια Έσοδα Βιοκλινικής</h6>
+                                            <div class="row d-flex align-items-center">
+                                                <div class="col-9">
+                                                    <h3 class="f-w-300 d-flex align-items-center m-b-0"><h3 class="comma">{{daily_revenue}}</h3>
+                                                        
+                                                    </h3>
+														
+                                                </div>
+
+                                                <div class="col-3 text-right">
+                                                    <p class="m-b-0">67%</p>
+                                                </div>
+                                            </div>
+                                            <div class="progress m-t-30" style="height: 7px;">
+                                                <div class="progress-bar progress-c-theme" role="progressbar"
+                                                        style="width: 50%;" aria-valuenow="50" aria-valuemin="0"
+                                                        aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--[ daily sales section ] end-->
+                                <!--[ Monthly  sales section ] starts-->
+                                <div class="col-md-6 col-xl-4">
+                                    <div class="card Monthly-sales">
+                                        <div class="card-block">
+                                            <h6 class="mb-4">Μηνιαία Έσοδα Βιοκλινικής</h6>
+                                            <div class="row d-flex align-items-center">
+                                                <div class="col-9">
+                                                    <h3 class="f-w-300 d-flex align-items-center  m-b-0"><h3 class="comma">$
+                                                        {{monthly_revenue}}</h3></h3>
+                                                </div>
+                                                <div class="col-3 text-right">
+                                                    <p class="m-b-0">36%</p>
+                                                </div>
+                                            </div>
+                                            <div class="progress m-t-30" style="height: 7px;">
+                                                <div class="progress-bar progress-c-theme2" role="progressbar"
+                                                        style="width: 35%;" aria-valuenow="35" aria-valuemin="0"
+                                                        aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--[ Monthly  sales section ] end-->
+                                <!--[ year  sales section ] starts-->
+                                <div class="col-md-12 col-xl-4">
+                                    <div class="card yearly-sales">
+                                        <div class="card-block">
+                                            <h6 class="mb-4">Συνολικά Έσοδα Βιοκλινικής</h6>
+                                            <div class="row d-flex align-items-center">
+                                                <div class="col-9">
+                                                    <h3 class="f-w-300 d-flex align-items-center  m-b-0"><h3 class="comma">$
+                                                        {{total_revenue}}</h3></h3>
+                                                </div>
+                                                <div class="col-3 text-right">
+                                                    <p class="m-b-0">80%</p>
+                                                </div>
+                                            </div>
+                                            <div class="progress m-t-30" style="height: 7px;">
+                                                <div class="progress-bar progress-c-theme" role="progressbar"
+                                                        style="width: 70%;" aria-valuenow="70" aria-valuemin="0"
+                                                        aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--[ year  sales section ] end-->
+                                <!--[ Recent Users ] start-->
+                                <div class="col-xl-8 col-md-6">
+                                    <div class="card Recent-Users">
+                                        <div class="card-header">
+                                            <h5>Ιστορικό Ασθενών</h5>
+                                        </div>
+                                        <form id="csv" action='{% url "export_csv"  %}'
+                                                    method='POST' enctype="multipart/form-data">
+                                                    {% csrf_token %}
+                                        <div>
+                                            <label for="day">Επιλέξτε ημέρα:</label>
+                                            <input type="number" name="day" id="day" max="31" min="1" value="">   
+
+                                            <label for="month">Επιλέξτε μήνα:</label>
+                                            <select name="month" id="month">
+                                            <option value="">Επιλέξτε μήνα</option>
+                                            <option value="1">Ιανουάριος</option>
+                                            <option value="2">Φεβρουάριος</option>
+                                            <option value="3">Μάρτιος</option>
+                                            <option value="4">Απρίλιος</option>
+                                            <option value="5">Μάιος</option>
+                                            <option value="6">Ιούνιος</option>
+                                            <option value="7">Ιούλιος</option>
+                                            <option value="8">Αύγουστος</option>
+                                            <option value="9">Σεπτέμβριος</option>
+                                            <option value="10">Οκτώβριος</option>
+                                            <option value="11">Νοέμβριος</option>
+                                            <option value="12">Δεκέμβριος</option>
+                                          </select>
+                                          <label for="day">Επιλέξτε Έτος:</label>
+                                          <input type="number" name="year" id="year" max="2030" min="2020" value="">
+                                        <div>
+                                            <button type="submit" class="btn btn-info btn-sm" style="position:absolute;left: 1000px;top: 50px;"> CSV</button>
+                                        </div>
+                                    </form>
+                                    </div>
+                                        <div class="card-block px-0 py-3">
+                                            <div class="table-responsive">
+                                                <table id="example" class="table table-hover">
+                                                    <thead>
+                                                    <tr>
+                                                        <th class="unread">                                                            
+                                                            </th>
+                                                        <th class="text-left">
+                                                            Επώνυμο
+                                                        </th>
+                                                        <th class="text-left">
+                                                            Όνομα
+                                                        </th>
+                                                        <th class="text-left">
+                                                            ΑΜΚΑ
+                                                        </th>
+                                                        <th class="text-left">
+                                                            Ημ/νια Επίσκεψης
+                                                        </th>   
+                                                        <th class="text-left">
+                                                            Επιλογές
+                                                        </th>    
+                                                    </tr> 
+                                                    </thead>
+                                                    <tbody>      
+                                                    {% for patient in patient %}
+                                                    <tr class="unread">
+                                                        <td><img class="rounded-circle" style="width:40px;"
+                                                                    src="{{ ASSETS_ROOT }}/images/user/avatar-1.jpg" alt="activity-user">
+                                                        </td>
+                                                        <td>
+                                                            <h6 class="mb-1">{{patient.name}}</h6>
+                                                            <p class="m-0"></p>
+                                                        </td>
+                                                        <td>
+                                                            <h6 class="mb-1">{{patient.surname}}</h6>
+                                                            <p class="m-0"></p>
+                                                        </td>
+                                                        <td>
+                                                            <h6 class="text-muted"><i
+                                                                    class="fas fa-circle text-c-green f-10 m-r-15"></i>{{patient.amka}}</h6>
+                                                        </td>
+                                                        <td>
+                                                            <h6 class="mb-1">{{patient.date_exam}}</h6>
+                                                            <p class="m-0"></p>
+                                                        </td>
+                                                        <td><a href="{% url 'profile' patient.prk %}" class="label theme-bg2 text-white f-12">Ιστορικό</a>
+                                                            <a href="{% url 'exam_patient' patient.prk %}" class="label theme-bg text-white f-12">Νέα Εξέταση </a>
+                                                        </td>
+                                                    </tr>
+                                                    {% endfor %}
+                                                    <tfoot>
+                                                        <tr>
+                                                            <th class="unread">                                                                
+                                                                </th>
+                                                            <th hidden>Επώνυμο
+                                                            </th>
+                                                            <th hidden>Όνομα</th>
+                                                            <th hidden>ΑΜΚΑ</th>
+                                                            <th  hidden>
+                                                                Ημ/νια Επίσκεψης
+                                                            </th>    
+                                                            <th hidden >Επιλογές</th>    
+                                                        </tr> 
+                                                    </tfoot>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--[ Recent Users ] end-->
+
+                                <!-- [ statistics year chart ] start -->
+                                <div class="col-xl-4 col-md-6">
+                                    <div class="card card-event">
+                                           
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-block border-bottom">
+                                            <div class="row d-flex align-items-center">
+                                                <div class="col-auto">
+                                                    <i class="feather icon-zap f-30 text-c-green"></i>
+                                                </div>
+                                                <div class="col">
+                                                    <h3 class="f-w-300"><h3 class="comma">{{total_visits_biokliniki}}</h3></h3>
+                                                    <span class="d-block text-uppercase">Σύνολο Ασθενών Βιοκλινική</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-block">
+                                            <div class="row d-flex align-items-center">
+                                                <div class="col-auto">
+                                                    <i class="feather icon-map-pin f-30 text-c-blue"></i>
+                                                </div>
+                                                <div class="col">
+                                                    <h3 class="f-w-300"><h3 class="comma">{{total_visits_lifecheck}}</h3></h3>
+                                                    <span class="d-block text-uppercase">Σύνολο Ασθενών LifeCheck</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- [ statistics year chart ] end -->
+                                <!--[social-media section] start-->
+                                <div class="col-md-12 col-xl-4">
+                                    <div class="card card-social">                                   
+                                </div>
+                            </div>
+                            </div>
+                            <!-- [ Main Content ] end -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- [ Main Content ] end -->            
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+<script>
+$(document).ready(function () {
+    $('#dtBasicExample').DataTable();
+    $('.dataTables_length').addClass('bs-select');
+  });
+</script>
+<script>
+
+    const collection = document.getElementsByClassName("comma");
+        for (let i = 0; i < collection.length; i++) {
+            collection[i].innerHTML = collection[i].innerHTML.replace(',','');
+    }
+
+    $(document).ready(function () {
+    // Setup - add a text input to each footer cell
+
+ 
+    // DataTable
+    var table = $('#example').DataTable({
+        initComplete: function () {
+            // Apply the search
+            this.api()
+                .columns()
+                .every(function () {
+                    var that = this;
+ 
+                    $('input', this.footer()).on('keyup change clear', function () {
+                        if (that.search() !== this.value) {
+                            that.search(this.value).draw();
+                        }
+                    });
+                });
+        },
+    });
+});
+</script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        var day = documnet.getElementById("day").value
+        var month = documnet.getElementById("month").value
+        var year = documnet.getElementById("year").value
+        $("#CSV").click(function() {
+            $.ajax({
+                url: "export_csv",
+                type: "GET",
+                dataType: "json",
+                data: {
+                'day': day,
+                'month': month,
+                'year': year,
+            },
+                success : function(json) {
+                    alert("Successfully sent the URL to Django day="+day+" month="+month+"year="+year);
+                },
+                error : function(xhr,errmsg,err) {
+                    alert("Could not send URL to Django. Error: " + xhr.status + ": " + xhr.responseText);
+                }
+            });
+        });
+    });
+</script>
+
+{% endblock javascripts %}

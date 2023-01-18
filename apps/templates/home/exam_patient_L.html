@@ -1,0 +1,574 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} UI Forms {% endblock %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}
+
+{% endblock stylesheets %}
+<style>
+    body {
+        font-family: Arial;
+    }
+
+    /* Style the tab */
+    .tab {
+        overflow: hidden;
+        border: 1px solid #ccc;
+        background-color: #f1f1f1;
+    }
+
+    /* Style the buttons inside the tab */
+    .tab button {
+        background-color: inherit;
+        float: left;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 14px 16px;
+        transition: 0.3s;
+        font-size: 17px;
+    }
+
+    /* Change background color of buttons on hover */
+    .tab button:hover {
+        background-color: #ddd;
+    }
+
+    /* Create an active/current tablink class */
+    .tab button.active {
+        background-color: #ccc;
+    }
+
+    /* Style the tab content */
+    .tabcontent {
+        display: none;
+        padding: 6px 12px;
+        -webkit-animation: fadeEffect 1s;
+        animation: fadeEffect 1s;
+    }
+
+    /* Fade in tabs */
+    @-webkit-keyframes fadeEffect {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes fadeEffect {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+</style>
+{% block content %}
+
+<!-- [ Main Content ] start -->
+<div class="pcoded-main-container">
+    <div class="pcoded-wrapper">
+
+        <div class="pcoded-content">
+            <div class="pcoded-inner-content">
+                <!-- [ breadcrumb ] start -->
+                <div class="page-header">
+                    <div class="page-block">
+                        <div class="row align-items-center">
+                            <div class="col-md-12">
+                                <div class="page-header-title">
+                                    <h5 class="m-b-10">Καταχώρηση Ασθενούς</h5>
+                                </div>
+                                <ul class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>
+                                    <li class="breadcrumb-item"><a href="javascript:">Form Componants</a></li>
+                                    <li class="breadcrumb-item"><a href="javascript:">Form Elements</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- [ breadcrumb ] end -->
+                <div class="main-body">
+                    <div class="page-wrapper">
+                        <!-- [ Main Content ] start -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5>Καταχώρση στοιχείων Εξεταζόμενου</h5>
+                                        <hr>
+
+                                        <ul class="nav nav-tabs">
+                                            <button class="btn btn-info" onclick="openCity(event, 'London')">Προσωπικά
+                                                Στοιχεία</button>
+                                            <button class="btn btn-info"
+                                                onclick="openCity(event, 'classhid')">Ιστορικό</button>
+                                            <button class="btn btn-info"
+                                                onclick="openCity(event, 'classhid2')">Εξέταση</button>
+                                            <button class="btn btn-info"
+                                                onclick="openCity(event, 'classhid3')">Γνωμάτευση Συμπέρασμα</button>
+                                        </ul>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <form action='insert_patient_L' method='POST'
+                                                    enctype="multipart/form-data">
+                                                    {% csrf_token %}
+                                                    <div id="London" class="tabcontent">
+                                                        <div class="form-group">
+                                                            <label for="exampleInputEmail1">Όνομα</label>
+                                                            <input type="text" class="form-control" name="name"
+                                                                id="name" ; required 
+                                                                {% if patient.prk %}
+                                                                placeholder={{patient.name}} value={{patient.name}} 
+                                                                {% else %} 
+                                                                placeholder="Όνομα Ασθενούς" 
+                                                                {% endif %}>
+                                                            </input>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="exampleInputEmail1">Επώνυμο</label>
+                                                            <input type="text" class="form-control" name="surname"
+                                                                id="surname" ; required 
+                                                                {% if patient.prk %}
+                                                                placeholder={{patient.surname}}
+                                                                value={{patient.surname}} 
+                                                                {% else %}
+                                                                placeholder="Επώνυμο Ασθενούς"
+                                                                {% endif %}></input>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="exampleInputEmail1">Πατρώνυμο</label>
+                                                            <input type="text" class="form-control" name="father_name"
+                                                                id="father_name" ; required 
+                                                                {% if patient.prk %}
+                                                                placeholder={{patient.father_name}}
+                                                                value={{patient.father_name}} 
+                                                                {% else %}
+                                                                placeholder="Πατρώνυμο"
+                                                                {% endif %}></input>
+                                                        </div>
+                                                        <div>
+                                                            <div>
+                                                                <label for="exampleInputEmail1">Φύλλο</label>
+                                                                <div class="form-check">
+                                                                    <select name="gender" id="gender">
+                                                                        <option value="Man">Man</option>
+                                                                        <option value="Woman">Woman</option>
+                                                                        <option value="Other">Other</option>
+                                                                        <option value={{patient.gender}} selected>
+                                                                            {{patient.gender}}</option>
+                                                                    </select>
+                                                                </div>
+                                                                <br>
+                                                                <hr>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="exampleInputEmail1">ΑΜΚΑ</label>
+                                                            <input type="text" maxlength="11" class="form-control"
+                                                                name="amka" ; required maxlength="11" size="11" 
+                                                                {% if patient.prk %} 
+                                                                placeholder={{patient.amka}} value={{patient.amka}} 
+                                                                {% else %}
+                                                                placeholder="ΑΜΚΑ Ασθενούς" 
+                                                                {% endif %}></input>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="exampleInputEmail1">Τηλέφωνο</label>
+                                                            <input type="text"  class="form-control"
+                                                                name="phone" id="phone";  
+                                                                {% if patient.prk %} 
+                                                                placeholder={{patient.phone}} value={{patient.phone}} 
+                                                                {% else %}
+                                                                placeholder="Τηλέφωνο" 
+                                                                {% endif %}></input>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="exampleInputEmail1">Τηλέφωνο Πλησιέστερου Συγγενούς</label>
+                                                            <input type="text" class="form-control"
+                                                                name="close_relative_phone" id="close_relative_phone"; 
+                                                                {% if patient.prk %} 
+                                                                placeholder={{patient.close_relative_phone}} value={{patient.close_relative_phone}} 
+                                                                {% else %}
+                                                                placeholder="Τηλέφωνο Πλησιέστερου Συγγενούς" 
+                                                                {% endif %}></input>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="exampleInputEmail1">e-mail</label>
+                                                            <input type="email"  class="form-control"
+                                                                name="email" id="email" 
+                                                                {% if patient.prk %} 
+                                                                placeholder={{patient.email}} value={{patient.email}} 
+                                                                {% else %}
+                                                                placeholder="e-mail" 
+                                                                {% endif %}></input>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>Ημερομηνία Γέννησης Ασθενούς</label>
+                                                            <input type="text" min="01/01/1900" max=""
+                                                                class="form-control" name="date_birth" id="date_birth" ;
+                                                                onfocus="(this.type='date')" 
+                                                                {% if patient.prk %}
+                                                                placeholder={{patient.date_birth}} value={{patient.date_birth}} {% else %}
+                                                                placeholder="Ημερομηνία Γέννησης" {% endif %}></input>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>Ημερομηνία Εξέτασης</label>
+                                                            <input type="date" class="form-control" name="date_exam" id="date_exam">
+                                                        </div>
+                                                        
+                                                    </div>
+                                            </div>
+                                        </div>
+
+                                        <div id="classhid" class="tabcontent" hidden>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    
+                                                    <div class="form-group">
+                                                        <label for="exampleFormControlTextarea1">Παρούσα Νόσος</label>
+                                                        <textarea class="form-control" name="current_disease" id="current_disease"
+                                                            rows="3"></textarea>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="exampleFormControlTextarea1">Ιστορικό
+                                                            Ασθενούς</label>
+                                                        <textarea class="form-control" name="istoriko" id="istoriko"
+                                                            rows="3"></textarea>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="exampleFormControlTextarea1">Οικογενειακό Ιστορικό
+                                                            </label>
+                                                        <textarea class="form-control" name="family_history" id="family_history"
+                                                            rows="3"></textarea>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="exampleFormControlTextarea1">Αλλεργίες (Ιστορικό Αντίδρασης)
+                                                            </label>
+                                                        <textarea class="form-control" name="allergies" id="allergies"
+                                                            rows="2"></textarea>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="exampleFormControlTextarea1">Εμβόλια
+                                                            </label>
+                                                        <textarea class="form-control" name="vaccine" id="vaccine"
+                                                            rows="1"></textarea>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="exampleFormControlTextarea1">Baseline παρακλινικός έλεγχος:</label>
+                                                        <textarea class="form-control" name="baseline" id="baseline"
+                                                            rows="3"></textarea>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="exampleFormControlTextarea1">Εργαστηριακά:</label>
+                                                        <textarea class="form-control" name="ergastiriaka" id="ergastiriaka"
+                                                            rows="3"></textarea>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="exampleFormControlTextarea1">Νοσηλείες / Χειρουργεία / ΤΕΠ:</label>
+                                                        <textarea class="form-control" name="tep" id="tep"
+                                                            rows="3">
+                                                            
+                                                            Παροξύνσεις ανά έτος:</textarea>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="exampleFormControlTextarea1">φ/α κατ’ οίκον:</label>
+                                                        <textarea class="form-control" name="katoikon" id="katoikon"
+                                                            rows="3"> 
+                                                            
+                                                            ΑΒx(3μηνο):</textarea>
+                                                    </div>
+                                                  
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div id="classhid2" class="tabcontent" hidden>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group w-25">
+                                                        <label for="exampleInputEmail1">CAT</label>
+                                                        <input type="text" maxlength="11" class="form-control"
+                                                            name="cat" id="cat"; required maxlength="11" size="11" 
+                                                            placeholder="CAT"></input>
+                                                            <input type="text" maxlength="11" class="form-control"
+                                                            name="mmrc" id="mmrc"; required maxlength="11" size="11" 
+                                                            placeholder="mMRC"></input>
+                                                            <input type="text" maxlength="11" class="form-control"
+                                                            name="EQ5D5L" id="EQ5D5L"; required maxlength="11" size="11" 
+                                                            placeholder="EQ-5D5L"></input>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="exampleFormControlTextarea1">Καρδιολογικός/ 'Αλλος Έλεγχος':</label>
+                                                        <textarea class="form-control" name="cardio" id="cardio"
+                                                            rows="3"></textarea>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="exampleFormControlSelect2">Εξέταση</label>
+                                                        <select class="form-control" id="energeia1" name="energeia1"
+                                                            onchange="SetCost()" multiple required>
+                                                            <option value="x" default>Χωρίς Πρόσθετη Εξέταση</option>
+                                                            {% for exam in exam %}
+                                                            <option value="{{ exam.code_exam }}"> {{ exam.exam }}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="exampleFormControlTextarea1"></label>
+                                                        <textarea class="form-control" id="energeia" name="energeia"
+                                                            hidden></textarea>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="exampleFormControlTextarea1">Αρχείο
+                                                            Εξετάσεων</label>
+                                                        <br>
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-toggle="tooltip">
+                                                            <input type="file" id="exam_file" name="exam_file"
+                                                                onchange="fileSelect(event)" id="fbutton">
+                                                        </button>
+                                                        <a id="pdf_file" type="text">
+                                                        </a>
+                                                    </div>
+                                                    <div class="table-responsive">
+                                                        <table id="example" class="table table-hover">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th class="unread">
+                                                                        <b>Ημ/νια Εξέτασης
+                                                                    </th>
+                                                                    <th class="text-left">
+                                                                        FVC_Prediction
+                                                                    </th>
+                                                                    <th class="text-left">
+                                                                        FVC_Best
+                                                                    </th>
+                                                                    <th class="text-left">
+                                                                        FVC_Post
+                                                                    </th>
+                                                                    <th class="text-left">
+                                                                        FVC_Post_Prediction
+                                                                    </th>
+                                                                    <th class="text-left">
+                                                                        FEV1_Prediction
+                                                                    </th>
+                                                                    <th class="text-left">
+                                                                        FEV1_Best
+                                                                    </th>
+                                                                    <th class="text-left">
+                                                                        FEV1_Post
+                                                                    </th>
+                                                                    <th class="text-left">
+                                                                        FEV1_Post_Prediction
+                                                                    </th>
+                                                                    <th class="text-left">
+                                                                        FEV1/FVC_Prediction
+                                                                    </th>
+                                                                    <th class="text-left">
+                                                                        FEV1/FVC_Best
+                                                                    </th>
+                                                                    <th class="text-left">
+                                                                        FEV1/FVC_Post
+                                                                    </th>
+                                                                    <th class="text-left">
+                                                                        FEV1/FVC_Post_Prediction
+                                                                    </th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="unread">
+                                                                    <td>
+                                                                        <input type="text"  class="form-control" id="exam_date" name="exam_date"></input>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" class="form-control" id="FVC_PRED" name="FVC_PRED"></input>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" class="form-control" id="FVC_BEST" name="FVC_BEST"></input>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" class="form-control" id="FVC_POST" name="FVC_POST"></input>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" class="form-control" id="FVC_POST_PRED" name="FVC_POST_PRED"></input>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" class="form-control" id="FEV1_PRED" name="FEV1_PRED"></input>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" class="form-control" id="FEV1_BEST" name="FEV1_BEST"></input>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" class="form-control" id="FEV1_POST" name="FEV1_POST"></input>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" class="form-control" id="FEV1_POST_PRED" name="FEV1_POST_PRED"></input>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" class="form-control" id="FEV1_FVC_PRED" name="FEV1_FVC_PRED"></input>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" class="form-control" id="FEV1_FVC_BEST" name="FEV1_FVC_BEST"></input>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" class="form-control" id="FEV1_FVC_POST" name="FEV1_FVC_POST"></input>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" class="form-control" id="FEV1_FVC_POST_PRED" name="FEV1_FVC_POST_PRED"></input>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="exampleFormControlTextarea1">Κόστος
+                                                            Επίσκεψης</label>
+                                                        <input type="text" class="form-control" id="visit_price"
+                                                            name="visit_price" value="25"></input>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="exampleFormControlTextarea1">Κόστος
+                                                            Σπιρομέτρησης</label>
+                                                        <input type="text" class="form-control" id="exam_price"
+                                                            name="exam_price" value="15"></input>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="exampleFormControlTextarea1">Κόστος</label>
+                                                        <textarea class="form-control" id="cost" name="cost" cols="30"
+                                                            rows="1" value="x"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div id="classhid3" class="tabcontent" hidden>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                <label for="exampleFormControlTextarea1">Συμπέρασμα:</label>
+                                                <textarea class="form-control" name="conclusion" id="conclusion"
+                                                    rows="3"></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleFormControlTextarea1">Συστάσεις:</label>
+                                                <textarea class="form-control" name="suggestion" id="suggestion"
+                                                    rows="3"></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleFormControlTextarea1">Follow-Up:</label>
+                                                <textarea class="form-control" name="followup" id="followup"
+                                                    rows="3"></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleFormControlTextarea1">Προληπτικός:</label>
+                                                <textarea class="form-control" name="proliptikos" id="proliptikos"
+                                                    rows="3"></textarea>
+                                            </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- [ Main Content ] end -->
+                <script>
+                    function SetCost() {
+                        var energeia = document.getElementById("energeia");
+                        var cost = document.getElementById("cost");
+                        var selected = document.querySelectorAll("#energeia1 option:checked");
+                        cost.value = Array.prototype.map.call(selected, el => el.value).join(',');
+                        energeia.value = Array.prototype.map.call(selected, el => el.value).join(',');
+                    }
+
+
+                    function myFunction() {
+                        document.getElementById("cost").value = document.getElementById("energeia").value;
+                    }
+
+                    function showOld() {
+                        alert(document.getElementById("energeiaa").value);
+                    }
+
+                    function openCity(evt, cityName) {
+                        var i, tabcontent, tablinks;
+                        tabcontent = document.getElementsByClassName("tabcontent");
+                        for (i = 0; i < tabcontent.length; i++) {
+                            tabcontent[i].style.display = "none";
+
+                        }
+                        tablinks = document.getElementsByClassName("tablinks");
+                        for (i = 0; i < tablinks.length; i++) {
+                            tablinks[i].className = tablinks[i].className.replace(" active", "");
+
+                        }
+                        document.getElementById("classhid").hidden = false;
+                        document.getElementById("classhid2").hidden = false;
+                        document.getElementById("classhid3").hidden = false;
+                        document.getElementById(cityName).style.display = "block";
+                        evt.currentTarget.className += " active";
+                    }
+
+
+                </script>
+
+<script>
+    var filename = $('input[type=file]').val().replace(/C:\\fakepath\\/i, '')
+
+    function fileSelect() {
+        var pathArray = $('input[type=file]').val().split('\\')
+        var filename = $('input[type=file]').val().replace(/C:\\fakepath\\/i, '')
+        var new_patharray = pathArray[pathArray.length - 1];
+        $.ajax({
+            url: "{% url 'load_pdf_exam_patient' %}",
+            type: "GET",
+            data: {
+                'pdf_link': new_patharray
+            },
+            dataType: 'json',
+            success: function (data) {
+                if (data.fdata) {
+                    
+                    document.getElementById("exam_date").value=document.getElementById("date_exam").value;
+                    document.getElementById("FVC_PRED").value = (data.fdata['FVC_PRED']);
+                    document.getElementById("FVC_BEST").value = (data.fdata['FVC_BEST']);
+                    document.getElementById("FVC_POST").value = (data.fdata['FVC_POST']);
+                    document.getElementById("FVC_POST_PRED").value = (data.fdata['FVC_POST_PRED']);
+                    document.getElementById("FEV1_PRED").value = (data.fdata['FEV1_PRED']);
+                    document.getElementById("FEV1_BEST").value = (data.fdata['FEV1_BEST']);
+                    document.getElementById("FEV1_POST").value = (data.fdata['FEV1_POST']);
+                    document.getElementById("FEV1_POST_PRED").value = (data.fdata['FEV1_POST_PRED']);
+                    document.getElementById("FEV1_FVC_PRED").value = (data.fdata['FEV1_FVC_PRED']);
+                    document.getElementById("FEV1_FVC_BEST").value = (data.fdata['FEV1_FVC_BEST']);
+                    document.getElementById("FEV1_FVC_POST").value = (data.fdata['FEV1_FVC_POST']);
+                    document.getElementById("FEV1_FVC_POST_PRED").value = (data.fdata['FEV1_FVC_POST_PRED']);
+                }
+            }
+        });
+    }
+</script>
+
+
+
+                {% endblock content %}
+
+                <!-- Specific Page JS goes HERE  -->
+                {% block javascripts %}{% endblock javascripts %}

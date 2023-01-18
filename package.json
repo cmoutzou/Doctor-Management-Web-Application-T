@@ -1,0 +1,28 @@
+{
+    "name": "pulmonologist",
+    "mastertemplate": "one",
+    "version": "one",
+    "description": "pulmonologist",
+    "scripts": {"start": "gunicorn pulmonologist.wsgi:application --bind 0.0.0.0:$PORT"},
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/app-generator/boilerplate-code-django-dashboard"
+    },
+    "bugs": {
+        "url": "https://github.com/app-generator/boilerplate-code-django-dashboard/issues",
+        "email": "support@appseed.us"
+    },
+    "author": "cmoutzou",
+    "engines": {
+        "node": "18.x",
+        "npm": "9.x"
+    },
+    "dependencies": {
+        "fullcalendar": "^6.0.1",
+        "django": "3.2.13",
+        "gunicorn": "20.0.4",
+        "psycopg2": "2.8.5",
+        "whitenoise": "5.1.0"
+    }
+}
+

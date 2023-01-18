@@ -1,0 +1,328 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+{% block title %} Profile {% endblock %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}
+
+{% endblock stylesheets %}
+
+{% block content %}
+
+<!-- [ Main Content ] start -->
+<div class="pcoded-main-container">
+    <div class="pcoded-wrapper">
+
+        <div class="pcoded-content">
+            <div class="pcoded-inner-content">
+                <div class="main-body">
+                    <div class="page-wrapper">
+                        <!-- [ Main Content ] start -->
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5>Καρτέλα Ασθενούς</h5>
+                                    </div>
+                                    <div class="card-block">
+                                        <div class="row">
+                                            <div class="col-sm-12 mb-4">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">Ονοματεπώνυμο</label>
+                                                    <input type="text" class="form-control" id="exampleInputEmail1"
+                                                        aria-describedby="emailHelp"
+                                                        placeholder='{{patient.surname}} {{patient.name}}'' readonly></input>
+                                                        <small id="emailHelp" class="form-text text-muted"></small>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6 mb-4">
+                                                    <div class="form-group">
+                                                        <label for="fn">Ημερομηνία Γέννησης</label>
+                                                        <input type="email" class="form-control" id="fn" aria-describedby="emailHelp" placeholder={{patient.date_birth}} readonly>
+                                                    </div>
+                                                </div>
+                                                <br><br><br><br><br>
+                                                <div class="col-sm-6 mb-4">
+                                                    <div class="form-group">
+                                                        <label for="ln">ΑΜΚΑ</label>
+                                                        <input type="email" class="form-control" id="ln" aria-describedby="emailHelp" placeholder={{patient.amka}} readonly>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 mb-4">
+                                                    <div class="form-group">
+                                                        <label for="abt">Ιστορικό Σπιρομετρήσεων</label>
+                                                        <div class="table-responsive">
+                                                            <table id="example" class="table table-hover">
+                                                                <thead>
+                                                                <tr>
+                                                                    <th class="unread">
+                                                                        <b>Ημ/νια Εξέτασης                                                            
+                                                                    </th>
+                                                                    <th class="text-left">
+                                                                        FVC_Best 
+                                                                    </th>
+                                                                    <th class="text-left">
+                                                                        FVC_Pred 
+                                                                    </th>
+                                                                    <th class="text-left">
+                                                                        FVC_Post 
+                                                                    </th>
+                                                                    <th class="text-left">
+                                                                        FVC_Post_Pred 
+                                                                    </th>
+                                                                    <th class="text-left">
+                                                                        FEV1_Best 
+                                                                    </th>
+                                                                    <th class="text-left">
+                                                                        FEV1_Pred 
+                                                                    </th>
+                                                                    <th class="text-left">
+                                                                        FEV1_Post 
+                                                                    </th>
+                                                                    <th class="text-left">
+                                                                        FEV1_Post_Pred 
+                                                                    </th>
+                                                                    <th class="text-left">
+                                                                        FV1/FVC_Best 
+                                                                    </th>
+                                                                    <th class="text-left">
+                                                                        FEV1/FVC_Pred 
+                                                                    </th>
+                                                                    <th class="text-left">
+                                                                        FEV1/FVC_Post 
+                                                                    </th>
+                                                                    <th class="text-left">
+                                                                        FEV1/FVC_Post_Pred</b>
+                                                                    </th>    
+                                                                </tr> 
+                                                                </thead>
+                                                                <tbody> 
+                                                                {% for key, value in fdata.items %}
+                                                                <tr class="unread">
+                                                                    {% for key1, value1 in value.items %}
+                                                                    <td>
+                                                                        <h6 class="mb-1">{{value1}}</h6>
+                                                                        <p class="m-0"></p>
+                                                                    </td> 
+                                                                    {% endfor %}                                                                   
+                                                                </tr>                                                                
+                                                                {% endfor %}
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-12 mb-4">
+                                                        <div class="form-group">
+                                                            <div class="pcoded-wrapper">
+                                                                <div class="pcoded-content">
+                                                                    <div class="pcoded-inner-content">
+                                                                        <!-- [ breadcrumb ] start -->                    
+                                                                        <!-- [ breadcrumb ] end -->
+                                                                        <ul class="nav nav-tabs">
+                                                                            <button class="btn btn-info"
+                                                                                onclick="openCity(event, 'London')">FVC</button>
+                                                                            <button class="btn btn-info"
+                                                                                onclick="openCity(event, 'classhid')">FEV1</button>
+                                                                            <button class="btn btn-info"
+                                                                                onclick="openCity(event, 'classhid2')">FEV1/FVC</button>
+                                                                        </ul>
+                                                    <div class="main-body">
+                                                        <div class="page-wrapper">
+                                                            <div id="London" class="tabcontent">
+                                                                <div class="card-header">
+                                                                    <h5>FVC</h5>
+                                                                </div>
+                                                                <div class="card-block">
+                                                                    <div id="morris-bar-chart" style="height:300px">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="page-wrapper">
+                                                            <div id="classhid" class="tabcontent" hidden>
+                                                                <div class="card-header">
+                                                                    <h5>FEV1</h5>
+                                                                </div>
+                                                                <div class="card-block">
+                                                                    <div id="morris-bar-chart2" style="height:300px">
+                                                                    </div>
+                                                                </div>
+                                                            </div></div>
+                                                            <div class="page-wrapper">
+                                                            <div id="classhid2" class="tabcontent" hidden>
+                                                                <div class="card-header">
+                                                                    <h5>FEV1/FVC</h5>
+                                                                </div>
+                                                                <div class="card-block">
+                                                                    <div id="morris-bar-chart3" style="height:300px">
+                                                                    </div>
+                                                                </div>
+                                                            </div></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6  md-3">
+                <div class="card">
+                    <div class="card-block">
+                        <div class="d-flex align-items-center justify-content-center flex-column">
+                            <div class="text-center">
+                                <h3 class="font-weight-bold h6">Αρχεία Ασθενούς</h3>
+                                <p class="font-italic text-muted">{{patient.surname}} {{patient.name}}</p>
+                            </div>
+                        </div>
+                        <ol type="1"></ol>
+                        {% load filter_tags %}
+                        {% for file in files %}
+                        {% with file.file1|split:"," as coma_files %}
+                        {% for f in coma_files%}
+                        <pre style="color:white"><li><a href="{{ ASSETS_ROOT }}/{{f|slice:'19:'}}" target="_blank" style="color:bisque"> {{ f|slice:"19:"}}</a> Επίσκεψη {{file.date_exam}}</pre>
+                        </li>
+                        {% endfor %}
+                        {% endwith %}
+                        {% endfor %}
+                        </ol>
+                        <div class="small font-weight-light mt-4 text-center text-muted">
+
+                        </div>
+                        <div class="d-flex justify-content-center align-items-center">
+                            <a href="#" class="h6 text-muted d-block m-1"><i class="icon feather icon-facebook"></i></a>
+                            <a href="#" class="h6 text-muted d-block m-1"><i class="icon feather icon-twitter"></i></a>
+                            <a href="#" class="h6 text-muted d-block m-1"><i
+                                    class="icon feather icon-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-block">
+                        <div class="d-flex align-items-center justify-content-center flex-column">
+                            <div class="text-center">
+                                <h3 class="font-weight-bold h6">Ιστορικό Ασθενούς</h3>
+                                <p class="font-italic text-muted">{{patient.surname}}
+                                    {{patient.name}}</p>
+                            </div>
+                        </div>
+                        <hr>
+                        {% for patient_data in patient_data %}
+                        <label for="abt">{{patient_data.date_exam}}</label>
+                        <textarea type="textarea" rows="5" class="form-control" id="abt" style="text-align:left"
+                            readonly>Ιστορικό: {{ patient_data.istoriko }} 
+                        Οικογενειακό Ιστορικό: {{ patient_data.family_history }} 
+                        Αλλεργίες: {{ patient_data.allergies }} 
+                        Εμβολιασμός: {{ patient_data.vaccine }} 
+                        Εργαστηριακά: {{ patient_data.ergastiriaka }} 
+                        mMRC: {{ patient_data.mmrc }} 
+                        EQ5D5L: {{ patient_data.EQ5D5L }} 
+                        Καρδιολογικός Έλεγχος: {{ patient_data.cardio }} 
+                        Απεικονιστικός: {{ patient_data.apeikonistikos }} 
+                        Συμπεράσματα: {{ patient_data.conclusion }} 
+                        FollowUp: {{ patient_data.followup }} 
+                        </textarea>
+                        <hr>
+                        <textarea type="textarea" rows="5" class="form-control" id="abt" style="text-align:left"
+                        readonly>
+                        Εξετάσεις: {{ patient_data.energeia }}</textarea>
+
+                        <hr>
+                        {% endfor %}
+                        <p> {{data}}</p>
+                        <div class="small font-weight-light mt-4 text-center text-muted">
+                        </div>
+                        <div class="card-block">
+                            <div id="morris-bar-chart3" style="height:300px"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-block">
+                        <div class="d-flex align-items-center justify-content-center flex-column">
+                            <div class="text-center">
+                                <button class="btn btn-primary"><a
+                                        href="{% url 'update_profile' patient.prk %}">Επεξεργασία
+                                        Ιστορικού Ασθενούς</a></button>
+                                <button class="btn btn-primary"><a
+                                            href="{% url 'some_view' patient.prk%}">Εxport
+                                        PDF</a></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- [ Main Content ] end -->
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+<!-- [ Main Content ] end -->
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+<script>
+    let text = document.getElementById("exam_file").innerHTML;
+    let result = text.substring(1, 4);
+
+    document.getElementById("demo").innerHTML = result;
+
+    document.getElementById("demo").innerHTML = result;
+
+    function clearcontent(elementID) {
+            document.getElementById(elementID).innerHTML = "";            
+        }
+
+    function openCity(evt, cityName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+
+        }
+        document.getElementById("classhid").hidden = false;
+        document.getElementById("classhid2").hidden = false;
+        document.getElementById(cityName).style.display = "block";
+        evt.currentTarget.className += " active";
+        var elementID="morris-bar-chart2"
+        var elementID2="morris-bar-chart3"
+        clearcontent(elementID);
+        clearcontent(elementID2);
+        Morris.Bar({{ chart_data2| safe}});
+        Morris.Bar({{ chart_data3| safe}});        
+    }
+</script>
+
+<!-- chart-morris Js -->
+<script src="{{ ASSETS_ROOT }}/plugins/chart-morris/js/raphael.min.js"></script>
+<script src="{{ ASSETS_ROOT }}/plugins/chart-morris/js/morris.min.js"></script>
+
+<script>
+    Morris.Bar({{ chart_data| safe}});
+
+</script>
+
+
+{% endblock javascripts %}

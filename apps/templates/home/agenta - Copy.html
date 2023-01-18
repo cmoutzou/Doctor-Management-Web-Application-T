@@ -1,0 +1,240 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'callendar/fonts/icomoon/style.css'  %}">
+  <link href='{% static "callendar/fullcalendar/packages/core/main.css"  %}' rel='stylesheet' />
+  <link href='{% static "callendar/fullcalendar/packages/daygrid/main.css"  %}' rel='stylesheet' />
+  <link
+    href="https://data.jsdelivr.com/v1/package/npm/fullcalendar/badge)](https://www.jsdelivr.com/package/npm/fullcalendar">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="{% static 'callendar/css/bootstrap.min.css'  %}">
+  <!-- Style -->
+  <link rel="stylesheet" href="{% static 'callendar/css/style.css'  %}">
+  <title>Agenta</title>
+</head>
+
+<style>
+  .modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place front is invalid - may break your css so removed */  
+    padding-top: 100px; /* Location of the box - don't know what this does?  If it is to move your modal down by 100px, then just change top below to 100px and remove this*/
+    left: 0;
+    right:0; /* Full width (left and right 0) */
+    top: 0;
+    bottom: 0; /* Full height top and bottom 0 */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    z-index: 9999; /* Sit on top - higher than any other z-index in your site*/
+}
+
+.button {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  z-index:-1;
+  position:absolute;
+  left: 200px;  
+  top: 15px;
+}
+</style>
+
+<body>
+
+
+
+    <!-- Trigger the modal with a button -->
+    <div >
+    <button type="button" class="btn btn-success btn-sm" style="z-index:+1;position:absolute;left: 200px;top: 15px;"  data-toggle="modal" data-target="#myModal">Νέα Καταχώρηση</button>
+    <button type="button" class="btn btn-info btn-sm" style="z-index:+1;position:absolute;left: 320px;top: 15px;" onclick="location.href='/'"; class="nav-link " >Επιστροφή</button>
+  </div>
+      <div >
+    
+  </div>
+  <p id="date" hidden> {{date}}</p>
+  <div id='calendar-container'>
+    <div id='calendar'></div>
+    
+  </div>
+
+
+  <script src="{% static 'callendar/js/jquery-3.3.1.min.js'  %}"></script>
+  <script src="{% static 'callendar/js/popper.min.js'  %}"></script>
+  <script src="{% static 'callendar/js/bootstrap.min.js'  %}"></script>
+
+  <script src='{% static "callendar/fullcalendar/packages/core/main.js"  %}'></script>
+  <script src='{% static "callendar/fullcalendar/packages/interaction/main.js"  %}'></script>
+  <script src='{% static "callendar/fullcalendar/packages/daygrid/main.js"  %}'></script>
+  <script src='{% static "callendar/fullcalendar/packages/timegrid/main.js"  %}'></script>
+  <script src='{% static "callendar/fullcalendar/packages/list/main.js"  %}'></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+  <script>
+    function myFunction() {
+      alert(document.getElementById("date").innerHTML);
+    }
+
+
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var calendarEl = document.getElementById('calendar');
+      var default_date = document.getElementById('date').innerHTML;
+
+
+      var calendar = new FullCalendar.Calendar(calendarEl, {
+        plugins: ['interaction', 'dayGrid', 'timeGrid', 'list', 'interactionPlugin '],
+        height: 'parent',
+        header: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+        },
+        defaultView: 'dayGridMonth',
+        defaultDate: default_date,
+        navLinks: true, // can click day/week names to navigate views
+        editable: true,
+        selectable: true,
+        selectHelper: true,
+        editable: true,
+        navLinks: true,
+        eventLimit: true,
+        editable: false,
+        eventLimit: true, // allow "more" link when too many events
+        events: [
+          {% for i in events %}
+                {
+          title: "{{ i.event_name}}",
+          start: '{{ i.start_date|date:"Y-m-d" }}',
+          end: '{{ i.end_date|date:"Y-m-d" }}',
+        },
+        {% endfor %}
+
+            ],
+      eventClick: function (info) {
+        alert('Event: ' + info.event.title);
+        alert('Event: ' + info.event.start.getDate() + "/" + info.event.start.getMonth() + "/" + info.event.start.getFullYear());
+        alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
+        alert('View: ' + info.view.type);
+
+        // change the border color just for fun
+        info.el.style.borderColor = 'red';
+      },
+
+      dayClick: function (date, jsEvent, view) {
+        alert('Clicked on: ' + date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear());
+      },
+
+    });
+  
+    calendar.render();
+});
+</script>
+<script>
+
+
+function add_ev() {
+      var title = prompt("Τίτλος Event:");
+      var start_date = prompt("Έναρξη Event:");
+      var end_date = prompt("Λήξη Event:");
+      var event_type = prompt("Παρατηρήσεις:");
+      var eventData;
+      if (title) {
+        eventData = {
+          event_name: title,
+          start_date: start_date,
+          end_date: end_date,
+          event_type:event_type,
+          allDay: true,
+        };
+
+        $.ajax({
+          url: "{% url 'add_event' %}",
+          type: "GET",
+          data: {
+            'eventData': eventData,
+            'event_name':title,
+            'start_date': start_date,
+            'end_date': end_date,
+            'event_type':event_type,
+          },
+          dataType: "json",
+          cache: true,
+          success: function (data) {
+            if (data) {
+              alert("Event name= "+data.event_name+" start date= "+data.start_date+" end date= "+data.end_date+" Παρατηρήσεις: "+data.event_type);
+              
+            }
+          }
+        });
+      }
+    }
+
+
+
+    //document.body.addEventListener('click', add_ev, true);
+  </script>
+  <script src="{% static 'callendar/js/main.js' %}"></script>
+  
+  
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+      <div class="modal-dialog">
+      
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header" style="text-align:10px">
+            <h4 class="modal-title" style="text-align:10px">Νέα Καταχώρηση</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            
+          </div>
+          <div class="modal-body">
+            <form id="insert_patient" action='{% url "new_event"  %}'
+                                                    method='POST' enctype="multipart/form-data">
+                                                    {% csrf_token %}
+                                                    <label for="exampleInputEmail1">Είδος Event
+                                                    <input type="text" class="form-control" name="event_type"
+                                                        id="event_type" ; required ></input></label>
+                                                        <hr>
+                                                    <label for="exampleInputEmail1">Περιγραφή
+                                                    <textarea rows="3" cols="50" type="textarea" class="form-control" name="event_name"
+                                                        id="event_name" ; required ></textarea></label>
+                                                        <hr>
+                                                        <label for="exampleInputEmail1">Έναρξη Event  
+                                                    <input type="date" name="start_date" id="start_date"></input></label>  
+                                                    <br>
+                                                    <label for="exampleInputEmail1">Λήξη  Event        
+                                                    <input type="date" name="end_date" id="end_date"></input></label> 
+                                                    <hr>
+                                                    <button type="submit" class="btn btn-primary">Καταχώρηση</button>
+                                        </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+        
+      </div>
+    </div>    
+ 
+</body>
+
+</html>

@@ -1,0 +1,320 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+{% block title %} Profile {% endblock %} 
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <!-- [ Main Content ] start -->
+    <div class="pcoded-main-container">
+        <div class="pcoded-wrapper">
+
+            <div class="pcoded-content">
+                <div class="pcoded-inner-content">
+                    <div class="main-body">
+                        <div class="page-wrapper">
+                            <!-- [ Main Content ] start -->
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5>Καρτέλα Ασθενούς</h5>
+                                        </div>
+                                        <form action={% url 'update_patient_form' %} method='POST' enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <div class="card-block">
+                                            <div class="row">
+                                                <div class="col-sm-6 mb-4">
+                                                    <div class="form-group">
+                                                        <label for="exampleInputEmail1">Όνομα</label>
+                                                        <input type="text" class="form-control" id="name" name="name" aria-describedby="emailHelp" placeholder={{patient.name}} value="{{patient.name}}" >
+                                                        <small  class="form-text text-muted"></small>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6 mb-4">
+                                                    <div class="form-group">
+                                                        <label for="exampleInputEmail1">Επώνυμο</label>
+                                                        <input type="text" class="form-control" id="surname" name="surname" aria-describedby="emailHelp" placeholder={{patient.surname}} value="{{patient.surname}}" >
+                                                        <small  class="form-text text-muted"></small>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6 mb-4">
+                                                    <div class="form-group">
+                                                        <label for="fn">Ημερομηνία Γέννησης</label>
+                                                        <input type="date" class="form-control" id="date_birth" name="date_birth" aria-describedby="emailHelp" value={{patient.date_birth}} >
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6 mb-4">
+                                                    <div class="form-group">
+                                                        <label for="ln">ΑΜΚΑ</label>
+                                                        <input type="text" maxlength='11' class="form-control" id="amka" name="amka" aria-describedby="emailHelp" placeholder={{patient.amka}} value={{patient.amka}} >
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 mb-4">
+                                                    <div class="form-group">
+                                                        <label for="add">Address</label>
+                                                        <input type="email" class="form-control" id="add" aria-describedby="emailHelp" placeholder="Enter email">
+                                                        <small id="addd" class="form-text text-muted">This is your shipments address</small>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 mb-4">
+                                                    <div class="form-group">
+                                                        <label for="abt">Ιστορικό Επισκέψεων</label>
+                                                        <textarea type="textarea" rows="5" class="form-control" id="abt" aria-describedby="emailHelp" placeholder={{patient.date_exam}}></textarea>
+                                                        <small id="abf" class="form-text text-muted">We'll show this on your profile.</small>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 mb-4">
+                                                    <div class="form-group">
+                                                        <input type="hidden" class="form-control" id="prk" name="prk" aria-describedby="emailHelp" placeholder={{patient.prk}} value="{{patient.prk}}">
+                                                        <small id="addd" class="form-text text-muted"></small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>                               
+                                <div class="col-sm-8  md-3">
+                                    <div class="card">
+                                        <div class="card-block">
+                                            <div class="d-flex align-items-center justify-content-center flex-column">
+                                                <div class="text-center">
+                                                    <h3 class="font-weight-bold h6">Αρχεία Ασθενούς</h3>
+                                                    <p class="font-italic text-muted">{{patient.surname}} {{patient.name}}</p>
+                                                </div>
+                                            </div>
+                                            <ol type="1"></ol>
+                                            {% load filter_tags %}
+                                            {% for file in files %}
+                                            {% with file.file1|split:"," as coma_files %}
+                                            {% for f in coma_files%}
+                                            <pre style="color:white"><li><a href="{{ ASSETS_ROOT }}/{{f|slice:'19:'}}" target="_blank" style="color:bisque"> {{ f|slice:"19:" }}</a>      Επίσκεψη {{file.date_exam}}</pre></li>
+                                            {% endfor %}
+                                            {% endwith %}
+                                            {% endfor %}     
+                                        </ol>
+                                        <hr>
+                                        <div class="input-group mb-3">
+                                            <div class="form-group">
+                                                <label for="exampleFormControlTextarea1">Αρχείο Εξετάσεων</label>
+                                                <br>
+                                                <button type="button" class="btn btn-secondary" data-toggle="tooltip">
+                                                    <input type="file" id="exam_file" name="exam_file">
+                                                </button>
+                                                
+
+                                            </div>
+                                            <div>
+                                                
+                                            </div>
+                                        </div>
+                                        </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-block">
+                                                <div class="col-sm-12 mb-4">
+                                                    <div class="form-group">
+                                                        <label for="abt">Ιστορικό Σπιρομετρήσεων</label>
+                                                        <div class="table-responsive">
+                                                            <table id="example" class="table table-hover">
+                                                                <thead>
+                                                                <tr>
+                                                                    <th class="unread">
+                                                                        <b>Ημ/νια Εξέτασης                                                            
+                                                                    </th>
+                                                                    <th class="text-left">
+                                                                        FVC_Best 
+                                                                    </th>
+                                                                    <th class="text-left">
+                                                                        FVC_Pred 
+                                                                    </th>
+                                                                    <th class="text-left">
+                                                                        FVC_Post 
+                                                                    </th>
+                                                                    <th class="text-left">
+                                                                        FVC_Post_Pred 
+                                                                    </th>
+                                                                    <th class="text-left">
+                                                                        FEV1_Best 
+                                                                    </th>
+                                                                    <th class="text-left">
+                                                                        FEV1_Pred 
+                                                                    </th>
+                                                                    <th class="text-left">
+                                                                        FEV1_Post 
+                                                                    </th>
+                                                                    <th class="text-left">
+                                                                        FEV1_Post_Pred 
+                                                                    </th>
+                                                                    <th class="text-left">
+                                                                        FV1/FVC_Best 
+                                                                    </th>
+                                                                    <th class="text-left">
+                                                                        FEV1/FVC_Pred 
+                                                                    </th>
+                                                                    <th class="text-left">
+                                                                        FEV1/FVC_Post 
+                                                                    </th>
+                                                                    <th class="text-left">
+                                                                        FEV1/FVC_Post_Pred</b>
+                                                                    </th>    
+                                                                </tr> 
+                                                                </thead>
+                                                                <tbody> 
+                                                                {% for d in files %} {{d.FVC_BEST}}
+                                                                <tr class="unread">
+                                                                    <td>
+                                                                        <input type="text" class="form-control" id="date_exam1" name="date_exam1" aria-describedby="emailHelp" placeholder={{d.date_exam}} value="{{d.date_exam}}">
+                                                                        <p class="m-0"></p>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" class="form-control" id="FVC_BEST" name="FVC_BEST" aria-describedby="emailHelp" placeholder={{d.FVC_BEST}} value="{{d.FVC_BEST}}" >
+                                                                        <p class="m-0"></p>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" class="form-control" id="FVC_PRED" name="FVC_PRED" aria-describedby="emailHelp" placeholder={{d.FVC_PRED}} value="{{d.FVC_PRED}}" >
+                                                                        <p class="m-0"></p>
+                                                                    </td> 
+                                                                    <td>
+                                                                        <input type="text" class="form-control" id="FVC_POST" name="FVC_POST" aria-describedby="emailHelp" placeholder={{d.FVC_POST}} value="{{d.FVC_POST}}" >
+                                                                        <p class="m-0"></p>
+                                                                    </td> 
+                                                                    <td>
+                                                                        <input type="text" class="form-control" id="FVC_POST_PRED" name="FVC_POST_PRED" aria-describedby="emailHelp" placeholder={{d.FVC_POST_PRED}} value="{{d.FVC_POST_PRED}}" >
+                                                                        <p class="m-0"></p>
+                                                                    </td> 
+                                                                    <td>
+                                                                        <input type="text" class="form-control" id="FEV1_BEST" name="FEV1_BEST" aria-describedby="emailHelp" placeholder={{d.FEV1_BEST}} value="{{d.FEV1_BEST}}" >
+                                                                        <p class="m-0"></p>
+                                                                    </td> 
+                                                                    <td>
+                                                                        <input type="text" class="form-control" id="FEV1_PRED" name="FEV1_PRED" aria-describedby="emailHelp" placeholder={{d.FEV1_PRED}} value="{{d.FEV1_PRED}}" >
+                                                                        <p class="m-0"></p>
+                                                                    </td> 
+                                                                    <td>
+                                                                        <input type="text" class="form-control" id="FEV1_POST" name="FEV1_POST" aria-describedby="emailHelp" placeholder={{d.FEV1_POST}} value="{{d.FEV1_POST}}" >
+                                                                        <p class="m-0"></p>
+                                                                    </td> 
+                                                                    <td>
+                                                                        <input type="text" class="form-control" id="FEV1_POST_PRED" name="FEV1_POST_PRED" aria-describedby="emailHelp" placeholder={{d.FEV1_POST_PRED}} value="{{d.FEV1_POST_PRED}}" >
+                                                                        <p class="m-0"></p>
+                                                                    </td> 
+                                                                    <td>
+                                                                        <input type="text" class="form-control" id="FEV1_FVC_BEST" name="FEV1_FVC_BEST" aria-describedby="emailHelp" placeholder={{d.FEV1_FVC_BEST}} value="{{d.FEV1_FVC_BEST}}" >
+                                                                        <p class="m-0"></p>
+                                                                    </td> 
+                                                                    <td>
+                                                                        <input type="text" class="form-control" id="FEV1_FVC_PRED" name="FEV1_FVC_PRED" aria-describedby="emailHelp" placeholder={{d.FEV1_FVC_PRED}} value="{{d.FEV1_FVC_PRED}}" >
+                                                                        <p class="m-0"></p>
+                                                                    </td> 
+                                                                    <td>
+                                                                        <input type="text" class="form-control" id="FEV1_FVC_POST" name="FEV1_FVC_POST" aria-describedby="emailHelp" placeholder={{d.FEV1_FVC_POST}} value="{{d.FEV1_FVC_POST}}" >
+                                                                        <p class="m-0"></p>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" class="form-control" id="FEV1_FVC_POST_PRED" name="FEV1_FVC_POST_PRED" aria-describedby="emailHelp" placeholder={{d.FEV1_FVC_POST_PRED}} value="{{d.FEV1_FVC_POST_PRED}}" >
+                                                                        <p class="m-0"></p>
+                                                                    </td>   
+                                                                </tr>                                                                
+                                                                {% endfor %}
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                               
+                                            </div>    
+                                        <div class="card-block">
+                                            <div class="d-flex align-items-center justify-content-center flex-column">
+                                                <div class="text-center">
+                                                    <h3 class="font-weight-bold h6">Ιστορικό Ασθενούς</h3>
+                                                    <p class="font-italic text-muted">{{patient.surname}} {{patient.name}}</p>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            {% for patient_data in patient_data %}
+                                            <label for="abt">{{patient_data.date_exam}}</label>
+                                                        <label> Ιστορικό</label>
+                                                        <textarea type="textarea" rows="5" class="form-control" id="history{{patient_data.prk}}" name="history{{patient_data.prk}}" style="text-align:left"> {{ patient_data.istoriko}} </textarea>
+                                                        <hr>
+                                                        <label>Καρδιολογικός Έλεγχος</label>
+                                                        <textarea type="textarea" rows="5" class="form-control" id="cardio{{patient_data.prk}}" name="cardio{{patient_data.prk}}" style="text-align:left"> {{ patient_data.cardio}} </textarea>
+                                                        <hr>
+                                                        <label>Εξετάσεις</label>
+                                                        <textarea type="textarea" rows="5" class="form-control" id="energeia{{patient_data.prk}}" name="energeia{{patient_data.prk}}" style="text-align:left"> {{ patient_data.energeia}} </textarea>
+                                                        <hr>
+                                                        <label>Τρέχουσα Νόσος</label>
+                                                        <textarea type="textarea" rows="5" class="form-control" id="current_disease{{patient_data.prk}}" name="current_disease{{patient_data.prk}}" style="text-align:left">  {{ patient_data.current_disease}} </textarea>
+                                                        <hr>
+                                                        <label>Οικογενειακό Ιστορικό</label>
+                                                        <textarea type="textarea" rows="5" class="form-control" id="family_history{{patient_data.prk}}" name="family_history{{patient_data.prk}}" style="text-align:left">{{ patient_data.family_history}} </textarea>
+                                                        <hr>
+                                                        <label>Αλλεργίες</label>
+                                                        <textarea type="textarea" rows="5" class="form-control" id="allergies{{patient_data.prk}}" name="allergies{{patient_data.prk}}" style="text-align:left">{{ patient_data.allergies}} </textarea>
+                                                        <hr>
+                                                        <label>Εμβολιασμοί</label>
+                                                        <textarea type="textarea" rows="5" class="form-control" id="vaccine{{patient_data.prk}}" name="vaccine{{patient_data.prk}}" style="text-align:left">{{ patient_data.vaccine}} </textarea>
+                                                        <hr>
+                                                        <label>Baseline</label>
+                                                        <textarea type="textarea" rows="5" class="form-control" id="baseline{{patient_data.prk}}" name="baseline{{patient_data.prk}}" style="text-align:left">{{ patient_data.baseline}} </textarea>
+                                                        <hr>
+                                                        <label>Εργαστηριακά</label>
+                                                        <textarea type="textarea" rows="5" class="form-control" id="ergastiriaka{{patient_data.prk}}" name="ergastiriaka{{patient_data.prk}}" style="text-align:left">{{ patient_data.ergastiriaka}} </textarea>
+                                                        <hr>
+                                                        <label>ΤΕΠ</label>
+                                                        <textarea type="textarea" rows="5" class="form-control" id="tep{{patient_data.prk}}" name="tep{{patient_data.prk}}" style="text-align:left">{{ patient_data.tep}} </textarea>
+                                                        <hr>
+                                                        <label>Κατ'οίκον</label>
+                                                        <textarea type="textarea" rows="5" class="form-control" id="katoikon{{patient_data.prk}}" name="katoikon{{patient_data.prk}}" style="text-align:left">{{ patient_data.katoikon}} </textarea>
+                                                        <hr>
+                                                        <label>Συμπεράσματα</label>
+                                                        <textarea type="textarea" rows="5" class="form-control" id="conclusion{{patient_data.prk}}" name="conclusion{{patient_data.prk}}" style="text-align:left">{{ patient_data.conclusion}} </textarea>
+                                                        <hr>
+                                                        <label>Σύσταση</label>
+                                                        <textarea type="textarea" rows="5" class="form-control" id="suggestion{{patient_data.prk}}" name="suggestion{{patient_data.prk}}" style="text-align:left">{{ patient_data.suggestion}} </textarea>
+                                                        <hr>
+                                                        <label>Follow Up</label>
+                                                        <textarea type="textarea" rows="5" class="form-control" id="followup{{patient_data.prk}}" name="followup{{patient_data.prk}}" style="text-align:left">{{ patient_data.followup}} </textarea>
+                                                        <hr>
+                                                        <label>Προληπτικός</label>
+                                                        <textarea type="textarea" rows="5" class="form-control" id="proliptikos{{patient_data.prk}}" name="proliptikos{{patient_data.prk}}" style="text-align:left">{{ patient_data.proliptikos}} </textarea>
+                                                        <hr>
+                                            {% endfor %}    
+                                            <div class="small font-weight-light mt-4 text-center text-muted">
+                                                <button type="submit" class="btn btn-info">Ενημέρωση Καρτέλας Ασθενούς</button>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                                </div>
+                                
+                            </form>    
+                            <!-- [ Main Content ] end -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    <!-- [ Main Content ] end -->
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+<script>
+    let text = document.getElementById("exam_file").innerHTML;
+    let result = text.substring(1, 4);
+    
+    document.getElementById("demo").innerHTML = result;
+
+    document.getElementById("demo").innerHTML = result;
+    </script>
+
+
+{% endblock javascripts %}
