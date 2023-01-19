@@ -67,7 +67,7 @@ CSRF_TRUSTED_ORIGINS = ['http://localhost:85', 'http://127.0.0.1', 'https://' + 
 
 INSTALLED_APPS = [
     'django.contrib.admin',
-    'django.contrib.auth',
+    #'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -156,6 +156,8 @@ DATABASES = {
                         "SET NAMES 'utf8mb4';"
                         "SET CHARACTER SET utf8mb4;"
     },}}
+
+    
 if "DATABASE_URL" in os.environ:
     # Configure Django for DATABASE_URL environment variable.
     DATABASES["default"] = dj_database_url.config(
