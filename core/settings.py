@@ -142,7 +142,7 @@ WSGI_APPLICATION = 'core.wsgi.application'
 			'PORT'    :  3306,
         }, 
     }
-else:'''
+else:
 DATABASES = {
 	'default':{
 		'ENGINE': 'django.db.backends.mysql',
@@ -157,16 +157,39 @@ DATABASES = {
                         'SET collation_connection=utf8mb4_unicode_ci;'
                         "SET NAMES 'utf8mb4';"
                         "SET CHARACTER SET utf8mb4;"
-    },}}
-    
-if "DATABASE_URL" in os.environ:
-    # Configure Django for DATABASE_URL environment variable.
-    DATABASES["default"] = dj_database_url.config(
-        conn_max_age=MAX_CONN_AGE, ssl_require=True)
+    },}}'''
 
-    # Enable test database if found in CI environment.
-    if "CI" in os.environ:
-        DATABASES["default"]["TEST"] = DATABASES["default"]
+
+urlparse.uses_netloc.append('mysql')
+
+try:
+
+    # Check to make sure DATABASES is set in settings.py file.
+    # If not default to {}
+
+    if 'DATABASES' not in locals():
+        DATABASES = {}
+
+    if 'DATABASE_URL' in os.environ:
+        url = urlparse.urlparse(os.environ['DATABASE_URL'])
+
+        # Ensure default database exists.
+        DATABASES['default'] = DATABASES.get('default', {})
+
+        # Update with environment configuration.
+        DATABASES['default'].update({
+            'NAME': url.path[1:],
+            'USER': url.username,
+            'PASSWORD': url.password,
+            'HOST': url.hostname,
+            'PORT': url.port,
+        })
+
+
+        if url.scheme == 'mysql':
+            DATABASES['default']['ENGINE'] = 'django.db.backends.mysql'
+except Exception:
+    print('Unexpected error:', sys.exc_info())
 
 ENCRYPT_KEY=b'kfkDSmQRsEpyEyyQ-0YWLLDEgbRVNsC95BzK5jyuFo4='
 
