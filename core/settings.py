@@ -11,6 +11,8 @@ import os
 from django.test.runner import DiscoverRunner
 from pathlib import Path
 
+import django_on_heroku
+django_on_heroku.settings(locals())
 
 
 # Activate Django-Heroku.
