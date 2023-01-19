@@ -5,7 +5,6 @@ Copyright (c) 2019 - present AppSeed.us
 
 import os, environ
 from django.contrib.messages import constants as messages
-import django_heroku
 import dj_database_url
 import os
 from django.test.runner import DiscoverRunner
