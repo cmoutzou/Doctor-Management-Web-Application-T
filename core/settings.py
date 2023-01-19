@@ -156,7 +156,6 @@ DATABASES = {
                         "SET NAMES 'utf8mb4';"
                         "SET CHARACTER SET utf8mb4;"
     },}}
-
     
 if "DATABASE_URL" in os.environ:
     # Configure Django for DATABASE_URL environment variable.
