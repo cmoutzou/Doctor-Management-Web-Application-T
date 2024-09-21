@@ -28,7 +28,7 @@ Installation
 Clone the repository:
 
 
-git clone https://github.com/yourusername/your-repo-name.git
+git clone https://github.com/cmoutzou/Doctor-Management_Web_Application-T
 cd your-repo-name
 Create a virtual environment and activate it:
 
